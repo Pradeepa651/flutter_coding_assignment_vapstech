@@ -28,150 +28,144 @@ class _MovieViewState extends State<MovieView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movies'),
-        centerTitle: true,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              // Open the menu
-              showMenu(
-                context: context,
-                position: const RelativeRect.fromLTRB(100, 80, 0, 0),
-                items: [
-                  PopupMenuItem(
-                    value: 'Company',
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Company : ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 120.w,
-                          child: const Text(
-                            'Geeksynergy Technologies Pvt Ltd',
-                            maxLines: 3,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
+          title: const Text('Movies'),
+          centerTitle: true,
+          foregroundColor: Colors.white,
+          actions: [
+            PopupMenuButton<String>(
+                onSelected: (value) {
+                  // Handle menu item selection
+                  if (value == 'logout') {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/login', (route) => true);
+                  }
+                },
+                itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        value: 'Company',
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Company : ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'Address',
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Address : ',
-                          maxLines: 3,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 120.w,
-                          child: const Text(
-                            'Sanjayanagar, Bengaluru-56',
-                            maxLines: 3,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
+                            SizedBox(
+                              width: 120.w,
+                              child: const Text(
+                                'Geeksynergy Technologies Pvt Ltd',
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'Email',
-                    child: Row(
-                      children: const [
-                        Text(
-                          'Email : ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          'XXXXXX@gmail.com',
-                          maxLines: 3,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'Email',
-                    child: Row(
-                      children: const [
-                        Text(
-                          'Phone : ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          'XXXXXXXXX09',
-                          maxLines: 3,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/login');
-                    },
-                    value: 'logout',
-                    child: const Text(
-                      'LogOut',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
                       ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
-      ),
+                      PopupMenuItem(
+                        value: 'Address',
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Address : ',
+                              maxLines: 3,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 120.w,
+                              child: const Text(
+                                'Sanjayanagar, Bengaluru-56',
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'Email',
+                        child: Row(
+                          children: const [
+                            Text(
+                              'Email : ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              'XXXXXX@gmail.com',
+                              maxLines: 3,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'Email',
+                        child: Row(
+                          children: const [
+                            Text(
+                              'Phone : ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              'XXXXXXXXX09',
+                              maxLines: 3,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'logout',
+                        child: const Text(
+                          'LogOut',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      )
+                    ])
+          ]),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
         child: FutureBuilder<List<Movie>>(

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_coding_assignment_vapstech/commonWidgets/InputField.dart';
 import 'package:flutter_coding_assignment_vapstech/commonWidgets/Button.dart';
 
+import '../Model/User.dart';
 import '../ModelView/FormValidationLogic.dart';
 import '../ModelView/login_controller.dart';
 
@@ -17,11 +18,35 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _logInFormKey = GlobalKey<FormState>();
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
 
-  @override
+  void _login() async {
+    User? user = await _databaseHelper.getUser(
+        usernameController.text, passwordController.text);
+    if (user != null) {
+      // User authenticated, navigate to the home screen or desired destination
+      Navigator.pushNamedAndRemoveUntil(context, '/Movies', (route) => false);
+    } else {
+      // Invalid credentials, display error message or perform necessary actions
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Invalid username or password.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +75,7 @@ class _LogInState extends State<LogIn> {
                 ),
                 InputField(
                   label: 'Username',
-                  controller: nameController,
+                  controller: usernameController,
                   formValidation: nameTextValidation,
                 ),
                 InputField(
@@ -62,17 +87,10 @@ class _LogInState extends State<LogIn> {
                 ),
                 Button(
                     text: 'Log In',
-                    action: () async {
-                      var res = await login(
-                        name: nameController.text,
-                        password: passwordController.text,
-                        databaseHelper: DatabaseHelper(),
-                      );
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Login successful')));
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/Movies', (route) => false);
+                    action: () {
+                      if (_logInFormKey.currentState?.validate() ?? false) {
+                        _login();
+                      }
                     }),
                 SizedBox(
                   height: 14.h,
@@ -87,7 +105,7 @@ class _LogInState extends State<LogIn> {
 
   @override
   void dispose() {
-    nameController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
     super.dispose();
   }

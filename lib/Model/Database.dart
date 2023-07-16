@@ -1,57 +1,69 @@
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 import 'User.dart';
 
 class DatabaseHelper {
-  static Database? _database;
+  static final DatabaseHelper _instance = DatabaseHelper.internal();
+  factory DatabaseHelper() => _instance;
 
-  DatabaseHelper() {}
-  //
-  Future<Database?> get database async {
-    if (_database != null) return _database;
+  Database? _db;
 
-    _database = await _initDB('users.DB');
-    return _database;
+  DatabaseHelper.internal() {}
+
+  Future<Database?> get db async {
+    if (_db != null) return _db;
+    _db = await initDb();
+    return _db;
   }
 
-  Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
+  Future<Database> initDb() async {
+    String databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'myapp.db');
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    // Open/create the database at a given path
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
   }
 
-  Future<void> _createDB(Database db, int version) async {
-    await db.execute('''
-  CREATE TABLE IF NOT EXISTS users_db (
-    name  TEXT PRIMARY KEY ,
-    password TEXT,
-    email TEXT,
-    phone TEXT,
-    profession TEXT
-  )
-''');
+  void _onCreate(Database db, int newVersion) async {
+    // Create the user table
+    await db.execute(
+      'CREATE TABLE User(username TEXT PRIMARY KEY , email TEXT, password TEXT , profession TEXT , phone TEXT)',
+    );
   }
 
-  Future<int?> saveData(User user) async {
-    var dbClient = await database;
-    var res = await dbClient?.insert('users_db', user.toMap());
-    return res;
-  }
+  Future<int?> saveUser(User user) async {
+    var dbClient = await db;
+    // Check if the user already exists
+    List<Map<String, Object?>>? existingUsers = await dbClient?.query(
+      'User',
+      where: 'username = ?',
+      whereArgs: [user.username],
+    );
 
-  Future<User?> getLoginUser(String name, String password) async {
-    var dbClient = await database;
-    var res = await dbClient?.rawQuery("SELECT * FROM users_db ");
-
-    if (res != null && res.isNotEmpty) {
-      for (final r in res) {
-        if (r.containsValue(name) && r.containsValue(password)) {
-          print(User.fromMap(r));
-          return User.fromMap(r);
-        }
-      }
+    if (existingUsers != null && existingUsers.isNotEmpty) {
+      // User already exists, return an error code or message
+      return -1;
     }
-    return null;
+    return await dbClient?.insert('User', user.toMap());
+  }
+
+  Future<User?> getUser(String username, String password) async {
+    var dbClient = await db;
+    var result = await dbClient?.query(
+      'User',
+      where: 'username = ? AND password = ?',
+      whereArgs: [username, password],
+    );
+
+    if (result != null && result.isNotEmpty) {
+      return User.fromMap(result.first);
+    } else {
+      return null;
+    }
   }
 }

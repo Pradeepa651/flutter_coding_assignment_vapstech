@@ -6,6 +6,7 @@ import 'package:flutter_coding_assignment_vapstech/View/Movies.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../Model/User.dart';
 import '../commonWidgets/Button.dart';
 import '../commonWidgets/InputField.dart';
 
@@ -24,13 +25,55 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController name = TextEditingController();
+  TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController reEnterPassword = TextEditingController();
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
   List<String> professions = ['Engineer', 'Doctor', 'Teacher', 'Others'];
 
   String? _selectedProfession;
   final _signUpFormKey = GlobalKey<FormState>();
+
+  void _signup() async {
+    User user = User(
+        username: username.text,
+        password: password.text,
+        email: emailController.text,
+        profession: _selectedProfession.toString(),
+        phoneNumber: phoneNumberController.text);
+    if (await _databaseHelper.saveUser(user) == -1) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('User already exist'),
+          content: Text('You can now login with your credentials.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+    // Display a success message or navigate to the login screen
+    else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Signup Successful'),
+          content: Text('You can now login with your credentials.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+      Navigator.pushNamedAndRemoveUntil(context, '/Movies', (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +92,9 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 height: 40.h,
               ),
-              Text(
+              const Text(
                 'Welcome',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.blueAccent,
                   fontSize: 25,
                   fontFamily: 'Inter',
@@ -72,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               InputField(
                 label: "UserName",
-                controller: name,
+                controller: username,
                 formValidation: nameTextValidation,
               ),
               InputField(
@@ -141,19 +184,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Button(
                   text: 'Sign Up',
-                  action: () async {
+                  action: () {
                     if (_signUpFormKey.currentState?.validate() ?? false) {
-                      var res = await signUp(
-                          uname: name.text,
-                          email: emailController.text,
-                          password: password.text,
-                          profession: _selectedProfession!,
-                          phoneNumber: phoneNumberController.text,
-                          database: DatabaseHelper());
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Register successful')));
-                      Navigator.pushReplacementNamed(context, '/Movies');
+                      _signup();
                     }
                   }),
               const SizedBox(
@@ -174,7 +207,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    name.dispose();
+    username.dispose();
     emailController.dispose();
     phoneNumberController.dispose();
     password.dispose();
