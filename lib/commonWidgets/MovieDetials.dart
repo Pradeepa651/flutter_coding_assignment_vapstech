@@ -3,9 +3,9 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 class MovieDetails extends StatelessWidget {
-  final List<String> Star;
-  final String Genre;
-  final List<String> Director;
+  final List<String> star;
+  final String genre;
+  final List<String> director;
   final String language;
   final String totalVote;
   final String title;
@@ -13,9 +13,9 @@ class MovieDetails extends StatelessWidget {
 
   const MovieDetails({
     Key? key,
-    required this.Star,
-    required this.Genre,
-    required this.Director,
+    required this.star,
+    required this.genre,
+    required this.director,
     required this.language,
     required this.totalVote,
     required this.title,
@@ -41,9 +41,9 @@ class MovieDetails extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          for (String str in Star)
+          for (String dir in director)
             Text(
-              'Director: $str',
+              'Director: $dir',
               maxLines: 3,
               style: const TextStyle(
                 color: Colors.black,
@@ -52,9 +52,9 @@ class MovieDetails extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-          for (String str in Director)
+          for (String str in star)
             Text(
-              'Director: $str',
+              'Star: $str',
               maxLines: 3,
               style: const TextStyle(
                 color: Colors.black,
@@ -64,7 +64,7 @@ class MovieDetails extends StatelessWidget {
               ),
             ),
           Text(
-            '$language \| ${DateTime.parse(date).day}',
+            '$language | ${DateTime.parse(date).day}',
             style: const TextStyle(
               color: Colors.black,
               fontSize: 15,

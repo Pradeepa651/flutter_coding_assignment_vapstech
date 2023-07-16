@@ -38,14 +38,15 @@ class _MovieViewState extends State<MovieView> {
               // Open the menu
               showMenu(
                 context: context,
-                position: RelativeRect.fromLTRB(100, 80, 0, 0),
+                position: const RelativeRect.fromLTRB(100, 80, 0, 0),
                 items: [
                   PopupMenuItem(
+                    value: 'Company',
                     child: Row(
                       children: [
-                        Text(
+                        const Text(
                           'Company : ',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontFamily: 'Inter',
@@ -54,10 +55,10 @@ class _MovieViewState extends State<MovieView> {
                         ),
                         SizedBox(
                           width: 120.w,
-                          child: Text(
+                          child: const Text(
                             'Geeksynergy Technologies Pvt Ltd',
                             maxLines: 3,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                               fontFamily: 'Inter',
@@ -67,16 +68,15 @@ class _MovieViewState extends State<MovieView> {
                         ),
                       ],
                     ),
-                    value: 'Company',
                   ),
                   PopupMenuItem(
                     value: 'Address',
                     child: Row(
                       children: [
-                        Text(
+                        const Text(
                           'Address : ',
                           maxLines: 3,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontFamily: 'Inter',
@@ -85,10 +85,10 @@ class _MovieViewState extends State<MovieView> {
                         ),
                         SizedBox(
                           width: 120.w,
-                          child: Text(
+                          child: const Text(
                             'Sanjayanagar, Bengaluru-56',
                             maxLines: 3,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                               fontFamily: 'Inter',
@@ -100,11 +100,12 @@ class _MovieViewState extends State<MovieView> {
                     ),
                   ),
                   PopupMenuItem(
+                    value: 'Email',
                     child: Row(
-                      children: [
+                      children: const [
                         Text(
                           'Email : ',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontFamily: 'Inter',
@@ -114,7 +115,7 @@ class _MovieViewState extends State<MovieView> {
                         Text(
                           'XXXXXX@gmail.com',
                           maxLines: 3,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontFamily: 'Inter',
@@ -123,14 +124,14 @@ class _MovieViewState extends State<MovieView> {
                         ),
                       ],
                     ),
-                    value: 'Email',
                   ),
                   PopupMenuItem(
+                    value: 'Email',
                     child: Row(
-                      children: [
+                      children: const [
                         Text(
                           'Phone : ',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontFamily: 'Inter',
@@ -140,7 +141,7 @@ class _MovieViewState extends State<MovieView> {
                         Text(
                           'XXXXXXXXX09',
                           maxLines: 3,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontFamily: 'Inter',
@@ -149,22 +150,21 @@ class _MovieViewState extends State<MovieView> {
                         ),
                       ],
                     ),
-                    value: 'Email',
                   ),
                   PopupMenuItem(
                     onTap: () {
                       Navigator.pushNamed(context, '/login');
                     },
-                    child: Text(
+                    value: 'logout',
+                    child: const Text(
                       'LogOut',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    value: 'logout',
                   ),
                 ],
               );
@@ -208,9 +208,9 @@ class _MovieViewState extends State<MovieView> {
                                     width: 10.w,
                                   ),
                                   MovieDetails(
-                                      Star: movies[count].star,
-                                      Genre: movies[count].genre.toString(),
-                                      Director: movies[count].director,
+                                      star: movies[count].star,
+                                      genre: movies[count].genre.toString(),
+                                      director: movies[count].director,
                                       language:
                                           movies[count].lanuage.toString(),
                                       totalVote:
@@ -230,9 +230,10 @@ class _MovieViewState extends State<MovieView> {
                       );
                     });
               } else if (snap.hasError) {
-                return Center(child: CircularProgressIndicator());
-              } else
-                return SizedBox();
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return const SizedBox();
+              }
             }),
       ),
     );
