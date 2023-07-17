@@ -4,7 +4,7 @@ import 'package:flutter_coding_assignment_vapstech/commonWidgets/MovieDetials.da
 import 'package:flutter_coding_assignment_vapstech/commonWidgets/Voting.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_coding_assignment_vapstech/Service.dart';
+import 'package:flutter_coding_assignment_vapstech/apiPostCall.dart';
 
 import '../Model/MovieDataModel.dart';
 import '../commonWidgets/rectangleImage.dart';
