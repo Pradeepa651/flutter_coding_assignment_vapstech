@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MovieDetails extends StatelessWidget {
   final List<String> star;
@@ -24,65 +25,59 @@ class MovieDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-// Format the date as desired
-
-    return SizedBox(
-      width: 200,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Title : $title',
+          maxLines: 2,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.sp,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        for (String dir in director)
           Text(
-            'Title : $title',
-            maxLines: 2,
-            style: const TextStyle(
+            'Director : $dir',
+            overflow: TextOverflow.clip,
+            style: TextStyle(
               color: Colors.black,
-              fontSize: 18,
+              fontSize: 14.sp,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w500,
             ),
           ),
-          for (String dir in director)
-            Text(
-              'Director: $dir',
-              maxLines: 3,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 14,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          for (String str in star)
-            Text(
-              'Star: $str',
-              maxLines: 3,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 14,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+        for (String str in star)
           Text(
-            '$language | ${DateTime.parse(date).day}',
-            style: const TextStyle(
+            'Star : $str',
+            style: TextStyle(
               color: Colors.black,
-              fontSize: 15,
+              fontSize: 14.sp,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w500,
             ),
           ),
-          Text(
-            'totalVote : $totalVote',
-            style: const TextStyle(
-              color: Colors.blueAccent,
-              fontSize: 15,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w500,
-            ),
+        Text(
+          '$language | ${DateTime.parse(date).day}',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15.sp,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
           ),
-        ],
-      ),
+        ),
+        Text(
+          'totalVote : $totalVote',
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontSize: 15.sp,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -30,9 +30,9 @@ class InputField extends StatelessWidget {
           decoration: InputDecoration(
               label: Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
-                  fontSize: 15,
+                  fontSize: 15.sp,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w500,
                 ),

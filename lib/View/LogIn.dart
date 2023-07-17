@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_coding_assignment_vapstech/Model/Database.dart';
 
-import 'package:flutter_coding_assignment_vapstech/View/Movies.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_coding_assignment_vapstech/commonWidgets/InputField.dart';
 import 'package:flutter_coding_assignment_vapstech/commonWidgets/Button.dart';
 
 import '../Model/User.dart';
 import '../ModelView/FormValidationLogic.dart';
-import '../ModelView/login_controller.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -23,7 +21,7 @@ class _LogInState extends State<LogIn> {
   final _logInFormKey = GlobalKey<FormState>();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 
-  void _login() async {
+  void _login(context) async {
     User? user = await _databaseHelper.getUser(
         usernameController.text, passwordController.text);
     if (user != null) {
@@ -34,12 +32,12 @@ class _LogInState extends State<LogIn> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Login Failed'),
-          content: Text('Invalid username or password.'),
+          title: const Text('Login Failed'),
+          content: const Text('Invalid username or password.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),
@@ -89,7 +87,7 @@ class _LogInState extends State<LogIn> {
                     text: 'Log In',
                     action: () {
                       if (_logInFormKey.currentState?.validate() ?? false) {
-                        _login();
+                        _login(context);
                       }
                     }),
                 SizedBox(

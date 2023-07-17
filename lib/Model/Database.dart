@@ -30,7 +30,6 @@ class DatabaseHelper {
   }
 
   void _onCreate(Database db, int newVersion) async {
-    // Create the user table
     await db.execute(
       'CREATE TABLE User(username TEXT PRIMARY KEY , email TEXT, password TEXT , profession TEXT , phone TEXT)',
     );
@@ -38,7 +37,7 @@ class DatabaseHelper {
 
   Future<int?> saveUser(User user) async {
     var dbClient = await db;
-    // Check if the user already exists
+
     List<Map<String, Object?>>? existingUsers = await dbClient?.query(
       'User',
       where: 'username = ?',
@@ -46,7 +45,6 @@ class DatabaseHelper {
     );
 
     if (existingUsers != null && existingUsers.isNotEmpty) {
-      // User already exists, return an error code or message
       return -1;
     }
     return await dbClient?.insert('User', user.toMap());

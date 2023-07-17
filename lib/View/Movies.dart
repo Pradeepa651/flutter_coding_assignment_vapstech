@@ -34,7 +34,6 @@ class _MovieViewState extends State<MovieView> {
           actions: [
             PopupMenuButton<String>(
                 onSelected: (value) {
-                  // Handle menu item selection
                   if (value == 'logout') {
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/login', (route) => false);
@@ -45,23 +44,23 @@ class _MovieViewState extends State<MovieView> {
                         value: 'Company',
                         child: Row(
                           children: [
-                            const Text(
+                            Text(
                               'Company : ',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             SizedBox(
                               width: 120.w,
-                              child: const Text(
+                              child: Text(
                                 'Geeksynergy Technologies Pvt Ltd',
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -74,24 +73,24 @@ class _MovieViewState extends State<MovieView> {
                         value: 'Address',
                         child: Row(
                           children: [
-                            const Text(
+                            Text(
                               'Address : ',
                               maxLines: 3,
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                             SizedBox(
                               width: 120.w,
-                              child: const Text(
+                              child: Text(
                                 'Sanjayanagar, Bengaluru-56',
                                 maxLines: 3,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -103,12 +102,12 @@ class _MovieViewState extends State<MovieView> {
                       PopupMenuItem(
                         value: 'Email',
                         child: Row(
-                          children: const [
+                          children: [
                             Text(
                               'Email : ',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                               ),
@@ -118,7 +117,7 @@ class _MovieViewState extends State<MovieView> {
                               maxLines: 3,
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                               ),
@@ -129,12 +128,12 @@ class _MovieViewState extends State<MovieView> {
                       PopupMenuItem(
                         value: 'Email',
                         child: Row(
-                          children: const [
+                          children: [
                             Text(
                               'Phone : ',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                               ),
@@ -144,7 +143,7 @@ class _MovieViewState extends State<MovieView> {
                               maxLines: 3,
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                               ),
@@ -154,11 +153,11 @@ class _MovieViewState extends State<MovieView> {
                       ),
                       PopupMenuItem(
                         value: 'logout',
-                        child: const Text(
-                          'LogOut',
+                        child: Text(
+                          'Logout',
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                            color: Colors.blueAccent,
+                            fontSize: 16.sp,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w600,
                           ),
@@ -177,13 +176,13 @@ class _MovieViewState extends State<MovieView> {
                     itemCount: movies.length,
                     itemBuilder: (context, count) {
                       return Container(
-                        height: 250,
+                        height: 250.h,
                         decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                               side: const BorderSide(
                                 color: Color(0xFF928DBE),
                               ),
-                              borderRadius: BorderRadius.circular(16)),
+                              borderRadius: BorderRadius.circular(16).r),
                         ),
                         margin: const EdgeInsets.only(bottom: 25).r,
                         child: Column(
@@ -201,16 +200,18 @@ class _MovieViewState extends State<MovieView> {
                                   SizedBox(
                                     width: 10.w,
                                   ),
-                                  MovieDetails(
-                                      star: movies[count].star,
-                                      genre: movies[count].genre.toString(),
-                                      director: movies[count].director,
-                                      language:
-                                          movies[count].lanuage.toString(),
-                                      totalVote:
-                                          movies[count].totalVote.toString(),
-                                      title: movies[count].title.toString(),
-                                      date: movies[count].date),
+                                  Expanded(
+                                    child: MovieDetails(
+                                        star: movies[count].star,
+                                        genre: movies[count].genre.toString(),
+                                        director: movies[count].director,
+                                        language:
+                                            movies[count].lanuage.toString(),
+                                        totalVote:
+                                            movies[count].totalVote.toString(),
+                                        title: movies[count].title.toString(),
+                                        date: movies[count].date),
+                                  ),
                                 ],
                               ),
                               Padding(

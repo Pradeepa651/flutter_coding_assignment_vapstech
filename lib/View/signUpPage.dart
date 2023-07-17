@@ -1,8 +1,6 @@
 import 'package:flutter_coding_assignment_vapstech/Model/Database.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_coding_assignment_vapstech/View/LogIn.dart';
-import 'package:flutter_coding_assignment_vapstech/View/Movies.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,9 +10,6 @@ import '../commonWidgets/InputField.dart';
 
 import '../ModelView/FormValidationLogic.dart';
 
-import '../ModelView/login_controller.dart';
-
-// import 'InputController';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -34,7 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String? _selectedProfession;
   final _signUpFormKey = GlobalKey<FormState>();
 
-  void _signup() async {
+  void _signup(context) async {
     User user = User(
         username: username.text,
         password: password.text,
@@ -45,28 +40,26 @@ class _SignUpPageState extends State<SignUpPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('User already exist'),
-          content: Text('You can now login with your credentials.'),
+          title: const Text('User already exist'),
+          content: const Text('You can now login with your credentials.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),
       );
-    }
-    // Display a success message or navigate to the login screen
-    else {
+    } else {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Signup Successful'),
-          content: Text('You can now login with your credentials.'),
+          title: const Text('Signup Successful'),
+          content: const Text('You can now login with your credentials.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),
@@ -78,7 +71,6 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // resizeToAvoidBottomInset: false,
         body: SafeArea(
       child: SingleChildScrollView(
         padding:
@@ -92,20 +84,20 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 height: 40.h,
               ),
-              const Text(
+              Text(
                 'Welcome',
                 style: TextStyle(
                   color: Colors.blueAccent,
-                  fontSize: 25,
+                  fontSize: 25.sp,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 'SignUp',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w600,
                 ),
@@ -136,9 +128,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     value: value,
                     child: Text(
                       value,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
                       ),
@@ -146,11 +138,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   );
                 }).toList(),
                 decoration: InputDecoration(
-                    label: const Text(
+                    label: Text(
                       'Profession',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
                       ),
@@ -186,11 +178,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   text: 'Sign Up',
                   action: () {
                     if (_signUpFormKey.currentState?.validate() ?? false) {
-                      _signup();
+                      _signup(context);
                     }
                   }),
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: 25.h,
               ),
               Button(
                 text: 'Login in',
