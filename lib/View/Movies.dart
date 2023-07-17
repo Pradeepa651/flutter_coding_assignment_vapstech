@@ -37,7 +37,7 @@ class _MovieViewState extends State<MovieView> {
                   // Handle menu item selection
                   if (value == 'logout') {
                     Navigator.pushNamedAndRemoveUntil(
-                        context, '/login', (route) => true);
+                        context, '/login', (route) => false);
                   }
                 },
                 itemBuilder: (BuildContext context) => [
