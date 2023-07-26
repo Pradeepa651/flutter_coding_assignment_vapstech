@@ -22,6 +22,8 @@ class RectangleImage extends StatelessWidget {
                 aspectRatio: 1 / 2,
                 child: Image.network(
                   src!,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const SizedBox(),
                 ),
               )
             : const SizedBox());

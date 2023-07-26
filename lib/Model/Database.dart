@@ -19,6 +19,7 @@ class DatabaseHelper {
 
   Future<Database> initDb() async {
     String databasesPath = await getDatabasesPath();
+
     String path = join(databasesPath, 'myapp.db');
 
     // Open/create the database at a given path
@@ -43,10 +44,10 @@ class DatabaseHelper {
       where: 'username = ?',
       whereArgs: [user.username],
     );
-
     if (existingUsers != null && existingUsers.isNotEmpty) {
       return -1;
     }
+
     return await dbClient?.insert('User', user.toMap());
   }
 

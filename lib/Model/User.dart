@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class User {
   String username;
   String password;
@@ -32,4 +34,8 @@ class User {
       'profession': profession,
     };
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory User.fromJson(String source) => User.fromMap(json.decode(source));
 }

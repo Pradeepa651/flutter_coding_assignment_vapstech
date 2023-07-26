@@ -21,7 +21,6 @@ class InputField extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
-          style: const TextStyle(color: Colors.brown),
           textInputAction: TextInputAction.done,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: formValidation,

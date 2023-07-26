@@ -18,9 +18,11 @@ class MovieView extends StatefulWidget {
 
 class _MovieViewState extends State<MovieView> {
   late Future<List<Movie>> moviesData;
+
   @override
-  void initState() {
+  initState() {
     moviesData = fetchMovies();
+
     super.initState();
   }
 
@@ -165,72 +167,88 @@ class _MovieViewState extends State<MovieView> {
                       )
                     ])
           ]),
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-        child: FutureBuilder<List<Movie>>(
-            future: fetchMovies(),
-            builder: (context, snap) {
-              if (snap.hasData) {
-                final movies = snap.data!;
-                return ListView.builder(
-                    itemCount: movies.length,
-                    itemBuilder: (context, count) {
-                      return Container(
-                        height: 250.h,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                color: Color(0xFF928DBE),
-                              ),
-                              borderRadius: BorderRadius.circular(16).r),
-                        ),
-                        margin: const EdgeInsets.only(bottom: 25).r,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Voting(
-                                    votingUp: movies[count].totalVote.toInt(),
-                                  ),
-                                  RectangleImage(
-                                      src: movies[count].poster.toString()),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Expanded(
-                                    child: MovieDetails(
-                                        star: movies[count].star,
-                                        genre: movies[count].genre.toString(),
-                                        director: movies[count].director,
-                                        language:
-                                            movies[count].lanuage.toString(),
-                                        totalVote:
-                                            movies[count].totalVote.toString(),
-                                        title: movies[count].title.toString(),
-                                        date: movies[count].date),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15)
-                                        .r,
-                                child: Button(
-                                    text: 'Watch trailer', action: () {}),
-                              )
-                            ]),
-                      );
-                    });
-              } else if (snap.hasError) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                return const SizedBox();
-              }
-            }),
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+          child: FutureBuilder<List<Movie>>(
+              future: fetchMovies(),
+              builder: (context, snap) {
+                if (snap.hasData) {
+                  final movies = snap.data!;
+                  return ListView.builder(
+                      itemCount: movies.length,
+                      itemBuilder: (context, count) {
+                        return Container(
+                          height: 250.h,
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  color: Color(0xFF928DBE),
+                                ),
+                                borderRadius: BorderRadius.circular(16).r),
+                          ),
+                          margin: const EdgeInsets.only(bottom: 25).r,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Voting(
+                                      votingUp: movies[count].totalVote.toInt(),
+                                    ),
+                                    RectangleImage(
+                                        src: movies[count].poster.toString()),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Expanded(
+                                      child: MovieDetails(
+                                          star: movies[count].star,
+                                          genre: movies[count].genre.toString(),
+                                          director: movies[count].director,
+                                          language:
+                                              movies[count].lanuage.toString(),
+                                          totalVote: movies[count]
+                                              .totalVote
+                                              .toString(),
+                                          title: movies[count].title.toString(),
+                                          date: movies[count].date),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 15)
+                                          .r,
+                                  child: Button(
+                                      text: 'Watch trailer', action: () {}),
+                                )
+                              ]),
+                        );
+                      });
+                } else if (snap.hasError) {
+                  return Center(
+                      child: Column(
+                    children: [
+                      Text(snap.error.toString()),
+                      ElevatedButton(
+                          onPressed: _refresh, child: const Text('Refresh')),
+                    ],
+                  ));
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              }),
+        ),
       ),
     );
+  }
+
+  Future _refresh() async {
+    setState(() {});
+    return Future.delayed(const Duration(seconds: 1));
   }
 }

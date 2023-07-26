@@ -24,11 +24,10 @@ class _LogInState extends State<LogIn> {
   void _login(context) async {
     User? user = await _databaseHelper.getUser(
         usernameController.text, passwordController.text);
+
     if (user != null) {
-      // User authenticated, navigate to the home screen or desired destination
       Navigator.pushNamedAndRemoveUntil(context, '/Movies', (route) => false);
     } else {
-      // Invalid credentials, display error message or perform necessary actions
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
