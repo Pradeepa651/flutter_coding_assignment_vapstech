@@ -40,6 +40,7 @@ dependencies:
   flutter_screenutil:
   font_awesome_flutter:
   path:
+  shared_preferences: ^2.2.0
 
 
 

@@ -5,6 +5,7 @@ import 'package:flutter_coding_assignment_vapstech/commonWidgets/Voting.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_coding_assignment_vapstech/apiPostCall.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/MovieDataModel.dart';
 import '../commonWidgets/rectangleImage.dart';
@@ -18,6 +19,7 @@ class MovieView extends StatefulWidget {
 
 class _MovieViewState extends State<MovieView> {
   late Future<List<Movie>> moviesData;
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   initState() {
@@ -35,8 +37,10 @@ class _MovieViewState extends State<MovieView> {
           foregroundColor: Colors.white,
           actions: [
             PopupMenuButton<String>(
-                onSelected: (value) {
+                onSelected: (value) async {
                   if (value == 'logout') {
+                    final SharedPreferences prefs = await _prefs;
+                    prefs.remove('User');
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/login', (route) => false);
                   }

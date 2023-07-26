@@ -4,6 +4,7 @@ import 'package:flutter_coding_assignment_vapstech/Model/Database.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_coding_assignment_vapstech/commonWidgets/InputField.dart';
 import 'package:flutter_coding_assignment_vapstech/commonWidgets/Button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/User.dart';
 import '../ModelView/FormValidationLogic.dart';
@@ -20,13 +21,16 @@ class _LogInState extends State<LogIn> {
   TextEditingController passwordController = TextEditingController();
   final _logInFormKey = GlobalKey<FormState>();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   void _login(context) async {
     User? user = await _databaseHelper.getUser(
         usernameController.text, passwordController.text);
+    final SharedPreferences prefs = await _prefs;
 
     if (user != null) {
       Navigator.pushNamedAndRemoveUntil(context, '/Movies', (route) => false);
+      prefs.setString('User', user.toJson());
     } else {
       showDialog(
         context: context,

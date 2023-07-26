@@ -3,6 +3,7 @@ import 'package:flutter_coding_assignment_vapstech/Model/Database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/User.dart';
 import '../commonWidgets/Button.dart';
@@ -24,6 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController password = TextEditingController();
   TextEditingController reEnterPassword = TextEditingController();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   List<String> professions = ['Engineer', 'Doctor', 'Teacher', 'Others'];
 
   String? _selectedProfession;
@@ -36,6 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
         email: emailController.text,
         profession: _selectedProfession.toString(),
         phoneNumber: phoneNumberController.text);
+    final SharedPreferences prefs = await _prefs;
     if (await _databaseHelper.saveUser(user) == -1) {
       showDialog(
         context: context,
@@ -51,6 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
     } else {
+      prefs.setString('User', user.toJson());
       showDialog(
         context: context,
         builder: (context) => AlertDialog(

@@ -9,7 +9,7 @@ class DatabaseHelper {
 
   Database? _db;
 
-  DatabaseHelper.internal() {}
+  DatabaseHelper.internal();
 
   Future<Database?> get db async {
     if (_db != null) return _db;
